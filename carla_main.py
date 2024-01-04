@@ -83,17 +83,19 @@ class CarlaBridge:
             print("Init Dummy Failed")
         try: 
             # VLP-16 LiDAR
-            lidar_bp = world.get_blueprint_library().find('sensor.lidar.ray_cast_semantic')
-            lidar_bp.set_attribute('channels', str(16))
+            lidar_bp = world.get_blueprint_library().find('sensor.lidar.ray_cast')
+            lidar_bp.set_attribute('channels', str(32))
             
             # Set the fps of simulator same as this
             lidar_bp.set_attribute('rotation_frequency', str(FPS))
             lidar_bp.set_attribute('range', str(LIDAR_RANGE))
-            lidar_bp.set_attribute('lower_fov', str(-15))
-            lidar_bp.set_attribute('upper_fov', str(15))
-            lidar_bp.set_attribute('points_per_second', str(300000))
-            
-            # lidar_bp.set_attribute('dropoff_general_rate',str(0.0))
+            lidar_bp.set_attribute('lower_fov', str(-22.5))
+            lidar_bp.set_attribute('upper_fov', str(22.5))
+            lidar_bp.set_attribute('points_per_second', str(1310720))
+            lidar_bp.set_attribute('dropoff_general_rate',str(0.1))
+            lidar_bp.set_attribute('atmosphere_attenuation_rate', str(0.004))
+            lidar_bp.set_attribute('noise_stddev', str(0.01))
+
             lidar_location = carla.Location(0, 0, 1.75)
             lidar_rotation = carla.Rotation(0, 0, 0)
             lidar_transform = carla.Transform(lidar_location, lidar_rotation)
@@ -119,23 +121,23 @@ class CarlaBridge:
             # self.ego.apply_control(carla.VehicleControl(
             #     throttle=0, steer=0, brake=0))
    
-
+    #Changing process_point_cloud() for XYZI format!
     def process_point_cloud(self, point_cloud_carla):
         pcd = np.copy(np.frombuffer(point_cloud_carla.raw_data,
-                                    dtype=np.dtype("f4, f4, f4, f4, u4, u4")))
+                                    dtype=np.dtype("f4, f4, f4, f4")))
         pcd = np.array(pcd.tolist())
 
         # The 4th column is considered as intensity in ros, hence making it one
-        pcd[:, 3] = 1
+        #pcd[:, 3] = 1
         # Flipping Y  | Carla works in in LHCS
         pcd[:, 1] = -pcd[:, 1]
 
-        pcd_xyz = pcd[:, :3]
+        pcd_xyzi = pcd[:, :4]
         
-        pcd_sem = pcd[:, 5].reshape(-1, 1)    # Semantic Information | Might be helpful later
-        pcd_intensity = pcd[:, 4].reshape(-1, 1)
+        #pcd_sem = pcd[:, 5].reshape(-1, 1)    # Semantic Information | Might be helpful later
+        #pcd_intensity = pcd[:, 4].reshape(-1, 1)
 
-        roscom.publish_points(pcd_xyz)
+        roscom.publish_points(pcd_xyzi)
     
 
     def run(self):

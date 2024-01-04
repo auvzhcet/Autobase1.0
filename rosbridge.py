@@ -54,7 +54,7 @@ class RosCom:
         )
 
     def publish_points(self, pcd):
-        assert pcd.shape[1] == 3, 'PCD should be in XYZ format'
-        pcd = np.hstack([pcd, np.ones((pcd.shape[0], 1))])
+        assert pcd.shape[1] == 4, 'PCD should be in XYZI format' #Changing this from original implementation, as now we are also getting Intensity from the LiDAR
+        #pcd = np.hstack([pcd, np.ones((pcd.shape[0], 1))]) #we dont need this now as we already have intensity
         ros_pcd = self.pcd_2_point_cloud(pcd, 'velodyne', rospy.Time.now())
         self.points_publisher.publish(ros_pcd)

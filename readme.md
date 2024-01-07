@@ -6,7 +6,8 @@ Autobase 1.0 is an autonomous driving platform developed from the ground up by s
 The Project is divided into various components each being developed sequentially. Some of the modules are listed below:
 
 1. **Carla Simulation**
-   * This module contains the scripts for setting up a virtual enviroment to test the stack. All of our further modules will be tested on this test bench. To learn more about setting up carla head on to Carla.md in the Docs folder. 
+   * This module contains the scripts for setting up a virtual enviroment to test the stack. All of our further modules will be tested on this test![Lego-Loam BOR in Carla](https://github.com/auvzhcet/Autobase1.0/assets/75717701/e764f96b-1a7a-462b-89c4-23b3c4d9a1a1)
+ bench. To learn more about setting up carla head on to Carla.md in the Docs folder. 
 
 2. **Controller** 
 

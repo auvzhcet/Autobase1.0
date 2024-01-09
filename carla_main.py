@@ -84,14 +84,14 @@ class CarlaBridge:
         try: 
             # VLP-16 LiDAR
             lidar_bp = world.get_blueprint_library().find('sensor.lidar.ray_cast_semantic')
-            lidar_bp.set_attribute('channels', str(16))
+            lidar_bp.set_attribute('channels', str(32))
             
             # Set the fps of simulator same as this
             lidar_bp.set_attribute('rotation_frequency', str(FPS))
             lidar_bp.set_attribute('range', str(LIDAR_RANGE))
-            lidar_bp.set_attribute('lower_fov', str(-15))
-            lidar_bp.set_attribute('upper_fov', str(15))
-            lidar_bp.set_attribute('points_per_second', str(300000))
+            lidar_bp.set_attribute('lower_fov', str(-22.5))
+            lidar_bp.set_attribute('upper_fov', str(22.5))
+            lidar_bp.set_attribute('points_per_second', str(1310720))
             
             # lidar_bp.set_attribute('dropoff_general_rate',str(0.0))
             lidar_location = carla.Location(0, 0, 1.75)
@@ -140,6 +140,19 @@ class CarlaBridge:
 
     def run(self):
         while not rospy.is_shutdown():
+            # Introduce noise to vehicle controls
+            throttle = random.uniform(0.9, 1.1)  # Random throttle variation
+            steer = random.uniform(-0.1, 0.1)  # Random steer variation
+            brake = random.uniform(0.0, 0.1)  # Random brake variation
+
+            # Apply noisy vehicle controls
+            self.vehicle.apply_control(carla.VehicleControl(
+                throttle=throttle, steer=steer, brake=brake))
+
+            # Introduce noise to LiDAR sensor
+            lidar_noise_stddev = random.uniform(0.0, 0.01)
+            self.lidar_sen.set_attribute('noise_stddev', str(lidar_noise_stddev))
+
             self.world.tick()
             self.spectator.set_transform(self.dummy.get_transform())
             time.sleep(0.02)

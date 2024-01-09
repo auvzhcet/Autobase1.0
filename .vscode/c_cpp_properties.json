@@ -1,0 +1,39 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/opt/ros/noetic/include/**",
+        "/home/falak/catkin_ws/devel/include/**",
+        "/home/falak/catkin_ws/src/navigation/amcl/include/**",
+        "/home/falak/catkin_ws/src/navigation/base_local_planner/include/**",
+        "/home/falak/catkin_ws/src/navigation/carrot_planner/include/**",
+        "/home/falak/catkin_ws/src/navigation/clear_costmap_recovery/include/**",
+        "/home/falak/catkin_ws/src/navigation/costmap_2d/include/**",
+        "/home/falak/catkin_ws/src/navigation/dwa_local_planner/include/**",
+        "/home/falak/catkin_ws/src/navigation/global_planner/include/**",
+        "/home/falak/catkin_ws/src/navigation/map_server/include/**",
+        "/home/falak/catkin_ws/src/navigation/move_base/include/**",
+        "/home/falak/catkin_ws/src/navigation/move_slow_and_clear/include/**",
+        "/home/falak/catkin_ws/src/navigation/nav_core/include/**",
+        "/home/falak/catkin_ws/src/navigation/navfn/include/**",
+        "/home/falak/catkin_ws/src/ouster-ros/include/**",
+        "/home/falak/catkin_ws/src/navigation/rotate_recovery/include/**",
+        "/home/falak/catkin_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/falak/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/home/falak/catkin_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/home/falak/catkin_ws/src/navigation/voxel_grid/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
